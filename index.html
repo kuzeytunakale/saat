@@ -1,101 +1,73 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kuzey Tuna Kale, Bu site Kuzey Tuna Kale tarafından yapılmıştır. Kuzey, kuzey, Tuna, tuna, Kale, kale, KUZEY, TUNA, KALE, Kuzey Tuna, kuzey tuna, Kuzey Tuna Kale, kuzey tuna kale">
-    <meta name="keywords" content="Kuzey Tuna Kale, Kuzey, kuzey, Tuna, tuna, Kale, kale, KUZEY, TUNA, KALE, Kuzey Tuna, kuzey tuna, Kuzey Tuna Kale, kuzey tuna kale">
-    <title>Saat</title>
-    <link rel="website icon" type="jpg" href="https://kuzeytunakale.github.io/saat/ktk.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: black;
+      color: white;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #clock {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    button {
+      background: black;
+      color: white;
+      font-size: 1em;
+      padding: 10px 20px;
+      border: 1px solid white;
+      cursor: pointer;
+    }
+    :fullscreen {
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"></div>
+  <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran Yap</button>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20% auto;
-            font-size: 2em;
-	}
-	.button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-	#content {
-	    display: flex;
-	    flex-direction: column;
-	    justify-content: center;
-	    align-items: center;
-	    height: 100vh;
-	    width: 100vw;
-	    position: fixed;
-	    top: 0;
-	    left: 0;
-	}
-	
-	#clock, #date, #buton {
-	    margin: 1px;
-	}
-		#clock {
-    font-size: 3em; /* istediğin boyutu buradan ayarla */
-}
-
-
-	:fullscreen {
-  	    background: black;
-	}	
-    </style>
- </head>
-<body bgcolor="Black" style="color:white">
-    
-    <div id="clock">
-
-<button onclick="toggleFullScreen()" style="background-color: black; color: white;"> Tam Ekran Yap </button>
-
-    </div>
-    </div>
-    <script>
+  <script>
     function toggleFullScreen() {
-      var elem = document.getElementById("content");
-      var button = document.querySelector("#buton button");
+      var elem = document.documentElement;
+      var button = document.getElementById("fullscreenBtn");
+
       if (!document.fullscreenElement) {
-        if (elem.requestFullscreen) {
-	  elem.requestFullscreen();
-	  button.textContent = "Tam Ekrandan Çık";
-          
-	  
-        }
+        elem.requestFullscreen();
+        button.textContent = "Tam Ekrandan Çık";
       } else {
-        if (document.exitFullscreen) {
-	  
-          document.exitFullscreen();
-	  button.textContent = "Tam Ekran Yap";
-	  
-        }
+        document.exitFullscreen();
+        button.textContent = "Tam Ekran Yap";
       }
     }
-    </script>
-    <script>
-        function updateClock() {
-            var options = {
-                timeZone: 'Europe/Istanbul',
-                hour12: false,
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric'
-            };
 
-            var formatter = new Intl.DateTimeFormat('tr-TR', options);
-            var currentTime = formatter.format(new Date());
-            document.getElementById('clock').textContent = currentTime;
-        }
+    function updateClock() {
+      var options = {
+        timeZone: 'Europe/Istanbul',
+        hour12: false,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      };
 
-        
-        setInterval(updateClock, 1000);
+      var formatter = new Intl.DateTimeFormat('tr-TR', options);
+      var currentTime = formatter.format(new Date());
+      document.getElementById('clock').textContent = currentTime;
+    }
 
-        
-        updateClock();
-    </script>
-
-    <br>
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 </html>
