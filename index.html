@@ -18,14 +18,27 @@
       align-items: center;
     }
     #clock {
-      font-size: 6em;
+      font-size: 12vw; /* ekran boyutuna göre */
+      margin-bottom: 10px;
+      letter-spacing: 5px;
+    }
+    #date {
+      font-size: 4vw;
       margin-bottom: 20px;
     }
     button {
       background: black;
       color: white;
-      
+      border: 2px solid white;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: white;
+      color: black;
     }
     :fullscreen {
       background: black;
@@ -33,40 +46,57 @@
   </style>
 </head>
 <body>
-  
-  <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran </button>
+  <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran</button>
+  <div id="date"></div>
   <div id="clock"></div>
+  
   
   <script>
     function toggleFullScreen() {
-      var elem = document.documentElement;
-      var button = document.getElementById("fullscreenBtn");
-
+      let elem = document.documentElement;
       if (!document.fullscreenElement) {
         elem.requestFullscreen();
-        button.textContent = "Tam Ekrandan çık";
       } else {
         document.exitFullscreen();
-        button.textContent = "Tam Ekran";
       }
     }
 
-    function updateClock() {
-      var options = {
+    // Tam ekran değiştiğinde buton metnini güncelle
+    document.addEventListener("fullscreenchange", () => {
+      let button = document.getElementById("fullscreenBtn");
+      if (document.fullscreenElement) {
+        button.textContent = "Tam Ekrandan Çık";
+      } else {
+        button.textContent = "Tam Ekran";
+      }
+    });
+
+    function updateClockAndDate() {
+      // Saat
+      let timeOptions = {
         timeZone: 'Europe/Istanbul',
         hour12: false,
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
       };
+      let timeFormatter = new Intl.DateTimeFormat('tr-TR', timeOptions);
+      document.getElementById('clock').textContent = timeFormatter.format(new Date());
 
-      var formatter = new Intl.DateTimeFormat('tr-TR', options);
-      var currentTime = formatter.format(new Date());
-      document.getElementById('clock').textContent = currentTime;
+      // Tarih
+      let dateOptions = {
+        timeZone: 'Europe/Istanbul',
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      };
+      let dateFormatter = new Intl.DateTimeFormat('tr-TR', dateOptions);
+      document.getElementById('date').textContent = dateFormatter.format(new Date());
     }
 
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClockAndDate, 1000);
+    updateClockAndDate();
   </script>
 </body>
 </html>
