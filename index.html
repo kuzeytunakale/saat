@@ -18,15 +18,13 @@
       align-items: center;
     }
     #clock {
-      font-size: 3em;
+      font-size: 6em;
       margin-bottom: 20px;
     }
     button {
       background: black;
       color: white;
-      font-size: 1em;
-      padding: 10px 20px;
-      border: 1px solid white;
+      
       cursor: pointer;
     }
     :fullscreen {
@@ -36,7 +34,7 @@
 </head>
 <body>
   <div id="clock"></div>
-  <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran Yap</button>
+  <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran </button>
 
   <script>
     function toggleFullScreen() {
@@ -45,10 +43,10 @@
 
       if (!document.fullscreenElement) {
         elem.requestFullscreen();
-        button.textContent = "Tam Ekrandan Çık";
+        button.textContent = "Tam Ekrandan çık";
       } else {
         document.exitFullscreen();
-        button.textContent = "Tam Ekran Yap";
+        button.textContent = "Tam Ekran";
       }
     }
 
