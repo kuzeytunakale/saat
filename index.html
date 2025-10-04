@@ -18,7 +18,7 @@
       align-items: center;
     }
     #clock {
-      font-size: 12vw; /* ekran boyutuna göre */
+      font-size: 12vw;
       margin-bottom: 10px;
       letter-spacing: 5px;
     }
@@ -27,6 +27,9 @@
       margin-bottom: 20px;
     }
     button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
       background: black;
       color: white;
       border: 2px solid white;
@@ -47,9 +50,8 @@
 </head>
 <body>
   <button id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran</button>
-  <div id="date"></div>
   <div id="clock"></div>
-  
+  <div id="date"></div>
   
   <script>
     function toggleFullScreen() {
