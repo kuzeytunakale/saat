@@ -46,12 +46,8 @@
     </style>
  </head>
 <body bgcolor="Black" style="color:white">
-    <div id="content">
-    <h1><big><big><div id="clock"></div></big></big></h1>
     
-    <h1><big><div id="date"></div></big></h1>
-    <div id="buton" class="button-container">
-
+    <div id="clock">
 
 <button onclick="toggleFullScreen()" style="background-color: black; color: white;"> Tam Ekran Yap </button>
 
@@ -91,16 +87,6 @@
             var formatter = new Intl.DateTimeFormat('tr-TR', options);
             var currentTime = formatter.format(new Date());
             document.getElementById('clock').textContent = currentTime;
-
-            var dateOptions = {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            };
-
-            var dateFormatter = new Intl.DateTimeFormat('tr-TR', dateOptions);
-            var currentDate = dateFormatter.format(new Date());
-            document.getElementById('date').textContent = currentDate;
         }
 
         
