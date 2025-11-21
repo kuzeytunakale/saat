@@ -41,18 +41,20 @@
     }
 
       a {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: black;
-      color: white;
-      border: 2px solid white;
-      padding: 5px 10px;
-      font-size: 0.9em;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    
+  position: absolute; /* Sayfa üzerinde konumu sabitler */
+  top: 20px;          /* Üstten 20px boşluk */
+  left: 20px;         /* Soldan 20px boşluk */
+  background: black;  /* Arka plan siyah */
+  color: white;       /* Yazı beyaz */
+  border: 2px solid white; /* Beyaz çerçeve */
+  padding: 5px 10px;  /* İç boşluk */
+  font-size: 0.9em;   /* Yazı boyutu */
+  border-radius: 8px; /* Köşeleri yuvarlatır */
+  cursor: pointer;    /* Fare imleci değişir */
+  transition: background 0.3s, color 0.3s; /* Renk geçişleri */
+}
+
+   
   </style>
 </head>
 <body>
