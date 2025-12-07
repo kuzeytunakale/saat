@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kuzey Tuna Kale - Kuzey Tuna Kale'nin sitesi">
+  <meta name="keywords" content="Kuzey Tuna Kale, Kuzey, Tuna, Kale, yazılım, bilim, proje">
   <title>KTK Saat</title>
   <style>
     body {
@@ -53,13 +55,20 @@
   cursor: pointer;    /* Fare imleci değişir */
   transition: background 0.3s, color 0.3s; /* Renk geçişleri */
 }
-
+    .pp {
+  position: absolute; /* Sayfa üzerinde konumu sabitler */
+  top: 20px;          /* Üstten 20px boşluk */
+  
+  background: black;  /* Arka plan siyah */
+  color: black;       /* Yazı beyaz */
+      }
    
   </style>
 </head>
 <body>
   <button class="buttonc" id="fullscreenBtn" onclick="toggleFullScreen()">Tam Ekran</button>
   <a href="https://kuzeytunakale.github.io/LOTR"> <button class="ao"> Hobbit: Yalnız Dağ </button> </a>
+  <p class="pp"> <strong><big>Kuzey Tuna Kale</big></strong> </p>
   <div id="date"></div>
   <div id="clock"></div>
   
