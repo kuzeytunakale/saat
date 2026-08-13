@@ -1,131 +1,86 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kuzey Tuna Kale - Kuzey Tuna Kale'nin sitesi">
-  <meta name="keywords" content="Kuzey Tuna Kale, Kuzey, Tuna, Kale, yazılım, bilim, proje">
-  <title>Kuzey Tuna Kale - Saat</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: black;
-      color: white;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    #clock {
-      font-size: 15vw;
-      margin-bottom: 10px;
-      letter-spacing: 5px;
-    }
-    #date {
-      font-size: 3vw;
-      margin-bottom: 20px;
-    }
-    .buttonc {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  
-  padding: 10px 16px;
-  font-size: 0.9em;
-  border-radius: 12px;
-  
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-  
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  
-  cursor: pointer;
-  
-  transition: all 0.3s ease;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Hover efekti */
-.buttonc:hover {
-  background: white;
-  color: black;
-  transform: scale(1.05);
-}
+        body {
+            background-color: #0b0f19;
+            color: #64ffda;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh; /* Mobil tarayıcı çubukları için */
+            user-select: none;
+            padding: 1rem;
+        }
 
-/* Tıklama efekti */
-.buttonc:active {
-  transform: scale(0.95);
-}
-    
-    .pp {
-  position: absolute; /* Sayfa üzerinde konumu sabitler */
-  top: 20px;          /* Üstten 20px boşluk */
-  
-  background: black;  /* Arka plan siyah */
-  color: black;       /* Yazı beyaz */
-      }
-   
-  </style>
+        .clock-container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Akıcı tipografi: Ekran küçüldükçe saat fontu otomatik küçülür */
+        .time {
+            font-size: clamp(3.5rem, 15vw, 9rem);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+            line-height: 1;
+        }
+
+        .date {
+            font-size: clamp(1rem, 4vw, 1.8rem);
+            color: #8892b0;
+            margin-top: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .tag {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: rgba(136, 146, 176, 0.4);
+        }
+    </style>
 </head>
 <body>
-  <button class="buttonc" id="fullscreenBtn" onclick="toggleFullScreen()">
-  ⛶ Tam Ekran
-  </button>
-  
-  <h1> <mark class="pp"> <strong>Kuzey Tuna Kale</strong> </mark> </h1>
-  <div id="date"></div>
-  <div id="clock"></div>
-  
-  
-  <script>
-    function toggleFullScreen() {
-      let elem = document.documentElement;
-      if (!document.fullscreenElement) {
-        elem.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    }
 
-    // Tam ekran değiştiğinde buton metnini güncelle
-    document.addEventListener("fullscreenchange", () => {
-      let button = document.getElementById("fullscreenBtn");
-      if (document.fullscreenElement) {
-        button.textContent = "✖ Çık";
-      } else {
-        button.textContent = "⛶ Tam Ekran";
-      }
-    });
+    <div class="clock-container">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">1 Ocak 2026, Perşembe</div>
+        <div class="tag">// kuzeytunakale.github.io/saat</div>
+    </div>
 
-    function updateClockAndDate() {
-      // Saat
-      let timeOptions = {
-        timeZone: 'Europe/Istanbul',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      };
-      let timeFormatter = new Intl.DateTimeFormat('tr-TR', timeOptions);
-      document.getElementById('clock').textContent = timeFormatter.format(new Date());
+    <script>
+        function updateClock() {
+            const now = new Date();
 
-      // Tarih
-      let dateOptions = {
-        timeZone: 'Europe/Istanbul',
-        weekday: 'long',
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric'
-      };
-      let dateFormatter = new Intl.DateTimeFormat('tr-TR', dateOptions);
-      document.getElementById('date').textContent = dateFormatter.format(new Date());
-    }
+            // Saat formatı (HH:MM:SS)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
 
-    setInterval(updateClockAndDate, 1000);
-    updateClockAndDate();
-  </script>
+            // Türkçe tarih formatı
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('date').textContent = now.toLocaleDateString('tr-TR', options);
+        }
+
+        // Anlık güncelleme
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
