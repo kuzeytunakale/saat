@@ -11,26 +11,9 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg-color: #0b0f19;
-            --text-color: #64ffda;
-            --sub-color: #8892b0;
-            --btn-bg: rgba(255, 255, 255, 0.05);
-            --btn-border: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Beyaz/Açık Tema Varsayılanları */
-        body.light-theme {
-            --bg-color: #f8f9fa;
-            --text-color: #0f172a;
-            --sub-color: #475569;
-            --btn-bg: rgba(0, 0, 0, 0.05);
-            --btn-border: rgba(0, 0, 0, 0.1);
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #0b0f19;
+            color: #64ffda;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
@@ -40,7 +23,34 @@
             min-height: 100dvh;
             user-select: none;
             padding: 1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        /* Sağ Üst Tam Ekran Butonu */
+        .fullscreen-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #64ffda;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        .fullscreen-btn:hover {
+            border-color: #64ffda;
+            transform: scale(1.05);
+        }
+
+        .fullscreen-btn:active {
+            transform: scale(0.98);
         }
 
         .clock-container {
@@ -55,72 +65,35 @@
             letter-spacing: 2px;
             line-height: 1;
             font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.15);
         }
 
         .date {
             font-size: clamp(1rem, 4vw, 1.8rem);
-            color: var(--sub-color);
+            color: #8892b0;
             margin-top: 1.5rem;
             letter-spacing: 1px;
         }
 
-        /* Kontrol Butonları Alanı */
-        .controls {
-            margin-top: 3rem;
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: var(--btn-bg);
-            border: 1px solid var(--btn-border);
-            color: var(--text-color);
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn:hover {
-            border-color: var(--text-color);
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
         .tag {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             font-size: 0.75rem;
-            color: var(--sub-color);
-            opacity: 0.5;
+            color: #8892b0;
+            opacity: 0.4;
         }
     </style>
 </head>
 <body>
 
+    <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">[ ⛶ ]</button>
+
     <div class="clock-container">
         <div class="time" id="time">00:00:00</div>
         <div class="date" id="date">-</div>
-
-        <div class="controls">
-            <button class="btn" id="fullscreen-btn" onclick="toggleFullscreen()">[ ⛶ Tam Ekran ]</button>
-            <button class="btn" onclick="toggleSeconds()" id="sec-btn">Saniyeyi Gizle</button>
-            <button class="btn" onclick="toggleTheme()" id="theme-btn">Açık Tema</button>
-        </div>
-
         <div class="tag">// kuzeytunakale.github.io/saat</div>
     </div>
 
     <script>
-        let showSeconds = true;
-
         function updateClock() {
             const now = new Date();
 
@@ -128,60 +101,33 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
 
-            const timeElement = document.getElementById('time');
-            if (showSeconds) {
-                timeElement.textContent = `${hours}:${minutes}:${seconds}`;
-            } else {
-                timeElement.textContent = `${hours}:${minutes}`;
-            }
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
 
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
             document.getElementById('date').textContent = now.toLocaleDateString('tr-TR', options);
         }
 
-        // Tam Ekran Kontrolü
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
-                    btn.textContent = '[ ✕ Çıkış ]';
+                    btn.textContent = '[ ✕ ]';
                 }).catch(err => {
                     console.log(`Tam ekran hatası: ${err.message}`);
                 });
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen().then(() => {
-                        btn.textContent = '[ ⛶ Tam Ekran ]';
+                        btn.textContent = '[ ⛶ ]';
                     });
                 }
             }
         }
 
-        // Saniye Aç/Kapat
-        function toggleSeconds() {
-            showSeconds = !showSeconds;
-            document.getElementById('sec-btn').textContent = showSeconds ? "Saniyeyi Gizle" : "Saniyeyi Göster";
-            updateClock();
-        }
-
-        // Tema Değiştirme
-        function toggleTheme() {
-            const body = document.body;
-            const themeBtn = document.getElementById('theme-btn');
-            body.classList.toggle('light-theme');
-            
-            if (body.classList.contains('light-theme')) {
-                themeBtn.textContent = "Koyu Tema";
-            } else {
-                themeBtn.textContent = "Açık Tema";
-            }
-        }
-
-        // ESC ile tam ekrandan çıkıldığında buton yazısını güncelleme
         document.addEventListener('fullscreenchange', () => {
             const btn = document.getElementById('fullscreen-btn');
             if (!document.fullscreenElement) {
-                btn.textContent = '[ ⛶ Tam Ekran ]';
+                btn.textContent = '[ ⛶ ]';
             }
         });
 
